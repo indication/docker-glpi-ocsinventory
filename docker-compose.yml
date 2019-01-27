@@ -5,10 +5,12 @@ services:
     ports:
       - 81:80
     environment:
-      - DB_CONNECTION=mysql
-      - DB_HOST=snipedb
+      - DB_HOST=glpidb
       - DB_DATABASE=glpi
       - DB_USERNAME=glpi
+      - DB_PASSWORD=glpipass
+    links:
+      - glpidb:glpidb
   glpidb:
     # snipe-it only supports 5.x
     image: mysql:5

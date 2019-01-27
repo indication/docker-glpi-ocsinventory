@@ -6,7 +6,9 @@ MAINTAINER in_dow <in_dow [at] hotmail.com>
 # Install recommend packages
 RUN apk add -U --no-cache mysql-client gd \
     openldap libressl libzip freetype libpng libjpeg-turbo \
+    fcgi fcgiwrap perl \
     h2o supervisor imap-dev sudo musl c-client
+
 # Setup additional packages
 RUN set -ex \
     && apk add -U --no-cache --virtual .php-buildapps gcc make perl autoconf file g++ \
@@ -22,7 +24,7 @@ RUN set -ex \
     && docker-php-ext-install -j$(nproc) ldap \
     && pecl install apcu \
     && pecl clear-cache \
-    && docker-php-ext-enable apcu opecache imap \
+    && docker-php-ext-enable apcu opcache imap \
     && apk del --purge .php-buildapps
 
 

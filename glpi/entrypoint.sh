@@ -13,7 +13,5 @@ if [ ! -f "config/config_db.php" ] ; then
   sudo -u www-data -- php scripts/cliinstall.php --host=${DB_HOST}:${DB_PORT:-3306} --user=${DB_USERNAME} --pass=${DB_PASSWORD} --db=${DB_DATABASE} --lang=${INIT_LANG:-en_US}
 fi
 
-# cleanup files
-rm /var/run/fcgiwrap/fcgiwrap.sock
 
 exec $@

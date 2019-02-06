@@ -3,7 +3,7 @@ services:
   glpi:
     build: ./glpi
     ports:
-      - 81:80
+      - 82:80
     environment:
       - DB_HOST=glpidb
       - DB_DATABASE=glpi
@@ -16,10 +16,10 @@ services:
     image: mysql:5
     environment:
       - MYSQL_ROOT_PASSWORD=rootpass
-      - MYSQL_DATABASE=glpi
-      - MYSQL_USER=glpi
-      - MYSQL_PASSWORD=glpipass
+      #- MYSQL_DATABASE=glpi
+      #- MYSQL_USER=glpi
+      #- MYSQL_PASSWORD=glpipass
     command: --sql_mode=""
-#    volumes:
-#      - /mysql/dumps/dir:/docker-entrypoint-initdb.d
+    volumes:
+       - ./mysql.init:/docker-entrypoint-initdb.d:ro
 

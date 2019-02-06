@@ -22,7 +22,7 @@ RUN set -ex \
     && docker-php-ext-install -j$(nproc) ldap \
     && pecl install apcu \
     && pecl clear-cache \
-    && docker-php-ext-enable apcu opecache imap \
+    && docker-php-ext-enable apcu opcache imap \
     && apk del --purge .php-buildapps
 
 
@@ -37,7 +37,7 @@ USER www-data
 ENV GLPI_VERSION 9.3.3
 ENV GLPI_MD5SUM edf282d5e4d5f264df50d30819138acd
 # Clone and dependencies
-# Copy all configuration files and add alias(ln) to /snipeit
+# Copy all configuration files and add alias(ln) to /glpi
 RUN set -ex \
     && curl -o /tmp/glpi.tar.gz -sSL https://github.com/glpi-project/glpi/releases/download/$GLPI_VERSION/glpi-$GLPI_VERSION.tgz \
     && md5sum /tmp/glpi.tar.gz \
@@ -47,7 +47,19 @@ RUN set -ex \
     && rm /tmp/glpi.tar.gz \
     && ln -s . /var/www/html/glpi
 
-
+# setup plugins
+RUN set -ex \
+    && export PLUGIN_VERSION=1.5.6 \
+    && export PLUGIN_NAME=ocsinventoryng \
+    && export PLUGIN_MD5SUM=b31000dc9be0f79fee40a04bdd7332bf \
+    && curl -o /tmp/$PLUGIN_NAME.tar.gz -sSL https://github.com/pluginsGLPI/$PLUGIN_NAME/releases/download/$PLUGIN_VERSION/glpi-$PLUGIN_NAME-$PLUGIN_VERSION.tar.gz \
+    && (echo "$PLUGIN_MD5SUM */tmp/$PLUGIN_NAME.tar.gz" | md5sum -c || (md5sum /tmp/$PLUGIN_NAME.tar.gz && exit 1)) \
+    && mkdir -p plugins/$PLUGIN_NAME \
+    && cd plugins/$PLUGIN_NAME \
+    && tar -xzf /tmp/$PLUGIN_NAME.tar.gz --strip-components=1 \
+    && cd ../.. \
+    && rm /tmp/$PLUGIN_NAME.tar.gz
+    
 USER root
 
 

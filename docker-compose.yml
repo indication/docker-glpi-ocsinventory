@@ -5,10 +5,10 @@ services:
     image: mysql:5
     environment:
       - MYSQL_ROOT_PASSWORD=rootpass
-      - MYSQL_DATABASE=glpi
-      - MYSQL_USER=glpi
-      - MYSQL_PASSWORD=glpipass
+      #- MYSQL_DATABASE=glpi
+      #- MYSQL_USER=glpi
+      #- MYSQL_PASSWORD=glpipass
     command: --sql_mode=""
-#    volumes:
-#      - /mysql/dumps/dir:/docker-entrypoint-initdb.d
+    volumes:
+       - ./mysql.init:/docker-entrypoint-initdb.d:ro
 

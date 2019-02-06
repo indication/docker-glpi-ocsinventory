@@ -6,6 +6,7 @@ MAINTAINER in_dow <in_dow [at] hotmail.com>
 # Install recommend packages
 RUN apk add -U --no-cache mysql-client gd \
     openldap libressl libzip freetype libpng libjpeg-turbo \
+    font-ipa \
     h2o supervisor imap-dev sudo musl c-client
 # Setup additional packages
 RUN set -ex \
@@ -45,6 +46,7 @@ RUN set -ex \
     && tar -xzf /tmp/glpi.tar.gz --strip-components=1 \
     && rm install/install.php \
     && rm /tmp/glpi.tar.gz \
+    && vendor/tecnickcom/tcpdf/tools/tcpdf_addfont.php -i /usr/share/fonts/TTF/ipagp.ttf
     && ln -s . /var/www/html/glpi
 
 # setup plugins

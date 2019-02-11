@@ -6,7 +6,6 @@ MAINTAINER in_dow <in_dow [at] hotmail.com>
 # Install recommend packages
 RUN apk add -U --no-cache mysql-client gd \
     openldap libressl libzip freetype libpng libjpeg-turbo \
-    font-ipa \
     h2o supervisor imap-dev sudo musl c-client
 # Setup additional packages
 RUN set -ex \
@@ -46,9 +45,15 @@ RUN set -ex \
     && tar -xzf /tmp/glpi.tar.gz --strip-components=1 \
     && rm install/install.php \
     && rm /tmp/glpi.tar.gz \
-    && vendor/tecnickcom/tcpdf/tools/tcpdf_addfont.php -i /usr/share/fonts/TTF/ipagp.ttf
     && ln -s . /var/www/html/glpi
-
+RUN set -ex \
+    && curl -o /tmp/font.zip -sSL https://oscdl.ipa.go.jp/IPAfont/ipag00303.zip \
+    && mkdir /tmp/work \
+    && unzip /tmp/font.zip -j -d /tmp/work \
+    && rm /tmp/font.zip \
+    && php vendor/tecnickcom/tcpdf/tools/tcpdf_addfont.php -i /tmp/work/ipag.ttf \
+    && rm -rf /tmp/work
+    
 # setup plugins
 RUN set -ex \
     && export PLUGIN_VERSION=1.5.6 \

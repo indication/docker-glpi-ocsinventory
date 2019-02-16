@@ -32,7 +32,8 @@ RUN apk add -U --no-cache \
     perl-xml-parser perl-data-uuid perl-fcgi perl-test-exception perl-algorithm-diff perl-text-diff \
     perl-test-differences perl-devel-stacktrace perl-class-data-inheritable perl-exception-class \
     perl-test-most perl-mime-tools perl-convert-binhex perl-test-deep perl-xml-sax \
-    perl-test-requires perl-xml-parser perl-sub-uplevel perl-test-warnings perl-task-weaken perl-class-inspector
+    perl-test-requires perl-xml-parser perl-sub-uplevel perl-test-warnings perl-task-weaken perl-class-inspector \
+    perl-digest-sha1
 ENV OCS_VERSION 2.5
 ENV OCS_MD5SUM e69dc47b7a458c0588ab1e170dea33f2
 WORKDIR /tmp
@@ -45,7 +46,7 @@ RUN set -ex \
     && apk add -U --no-cache --virtual .perl-buildapps gcc make autoconf file g++ \
         perl-module-build perl-log-log4perl expat-dev expat \
         dpkg-dev dpkg re2c patch libc-dev \
-    && cpan -i XML::Entities Mojolicious::Lite\
+    && cpan -i XML::Entities Mojolicious::Lite Apache::DBI \
     && curl -o /tmp/ocs.tar.gz -sSL https://github.com/OCSInventory-NG/OCSInventory-ocsreports/releases/download/$OCS_VERSION/OCSNG_UNIX_SERVER_$OCS_VERSION.tar.gz \
     && md5sum /tmp/ocs.tar.gz \
     && (echo "$OCS_MD5SUM */tmp/ocs.tar.gz" | md5sum -c || (md5sum /tmp/ocs.tar.gz && exit 1)) \

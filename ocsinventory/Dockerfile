@@ -25,19 +25,21 @@ RUN set -ex \
 
 ############# BASE APPLICATION SETUP  ######################
 
-# perl-date-format
+# perl-date-format is error
 RUN apk add -U --no-cache \
+    perl perl-xml-libxml perl-xml-simple libxml2 \
+    perl-net-ip perl-dbi perl-dbd-mysql perl-io-compress perl-archive-zip \
     perl-net-ssleay perl-lwp-protocol-https perl-path-tiny perl-xml-xpath perl-xml-twig \
-    perl-test-failwarnings perl-test-mockrandom perl-test-fatal perl-unicode-string perl-test-mockobject \
-    perl-xml-parser perl-data-uuid perl-fcgi perl-test-exception perl-algorithm-diff perl-text-diff \
-    perl-test-differences perl-devel-stacktrace perl-class-data-inheritable perl-exception-class \
-    perl-test-most perl-mime-tools perl-convert-binhex perl-test-deep perl-xml-sax \
-    perl-test-requires perl-xml-parser perl-sub-uplevel perl-test-warnings perl-task-weaken perl-class-inspector \
-    perl-digest-sha1
+    perl-unicode-string perl-xml-parser perl-data-uuid perl-algorithm-diff perl-text-diff \
+    perl-devel-stacktrace perl-class-data-inheritable perl-exception-class \
+    perl-mime-tools perl-convert-binhex perl-xml-sax perl-digest-sha1 \
+    perl-xml-parser perl-sub-uplevel perl-task-weaken perl-class-inspector 
+
+############# BASE APPLICATION SETUP  ######################
 ENV OCS_VERSION 2.5
 ENV OCS_MD5SUM e69dc47b7a458c0588ab1e170dea33f2
 WORKDIR /tmp
-#  SOAP::Lite
+# perl-utils is for cpan
 RUN set -ex \
     && mkdir -p /etc/ocsinventory-server/plugins \
     && mkdir -p /etc/ocsinventory-server/perl \
@@ -45,8 +47,16 @@ RUN set -ex \
     && mkdir -p /var/lib/ocsinventory-reports \
     && apk add -U --no-cache --virtual .perl-buildapps gcc make autoconf file g++ \
         perl-module-build perl-log-log4perl expat-dev expat \
-        dpkg-dev dpkg re2c patch libc-dev \
+        patch libc-dev perl-utils \
+        perl-test-failwarnings perl-test-mockrandom perl-test-fatal perl-test-mockobject \
+        perl-test-exception perl-test-differences perl-test-most perl-test-deep perl-test-requires perl-test-warnings \
+    && echo Create environment from cpan... \
     && cpan -i XML::Entities Mojolicious::Lite Apache::DBI \
+    && echo Create environment without cpan becase it gets mutch error related to apache \
+    && curl -o /tmp/soaplite.tar.gz -sSL https://cpan.metacpan.org/authors/id/P/PH/PHRED/SOAP-Lite-1.27.tar.gz \
+    && mkdir soaplite && cd soaplite && tar xzf ../soaplite.tar.gz --strip-components=1 && rm ../soaplite.tar.gz \
+    && perl Makefile.PL && make -j$(nproc) && make test && make install && cd .. && rm -rf soaplite \
+    && echo Setup OCS Inventory \
     && curl -o /tmp/ocs.tar.gz -sSL https://github.com/OCSInventory-NG/OCSInventory-ocsreports/releases/download/$OCS_VERSION/OCSNG_UNIX_SERVER_$OCS_VERSION.tar.gz \
     && md5sum /tmp/ocs.tar.gz \
     && (echo "$OCS_MD5SUM */tmp/ocs.tar.gz" | md5sum -c || (md5sum /tmp/ocs.tar.gz && exit 1)) \

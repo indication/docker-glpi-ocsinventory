@@ -23,7 +23,8 @@ RUN set -ex \
     && pecl install apcu \
     && pecl clear-cache \
     && docker-php-ext-enable apcu opcache imap \
-    && apk del --purge .php-buildapps
+    && apk del --purge .php-buildapps \
+    && mkdir -p /var/www/html/glpi
 
 
 ###################### DATA VOLUME  ########################
@@ -31,7 +32,7 @@ VOLUME ["/var/lib/glpi"]
 
 ############ INITIAL APPLICATION SETUP #####################
 # DO NOT change the order of following commands
-WORKDIR /var/www/html
+WORKDIR /var/www/html/glpi
 RUN chown -R www-data:www-data /var/www/html
 USER www-data
 ENV GLPI_VERSION 9.3.3
@@ -44,8 +45,7 @@ RUN set -ex \
     && (echo "$GLPI_MD5SUM */tmp/glpi.tar.gz" | md5sum -c || (md5sum /tmp/glpi.tar.gz && exit 1)) \
     && tar -xzf /tmp/glpi.tar.gz --strip-components=1 \
     && rm install/install.php \
-    && rm /tmp/glpi.tar.gz \
-    && ln -s . /var/www/html/glpi
+    && rm /tmp/glpi.tar.gz
 RUN set -ex \
     && curl -o /tmp/font.zip -sSL https://oscdl.ipa.go.jp/IPAfont/ipag00303.zip \
     && mkdir /tmp/work \

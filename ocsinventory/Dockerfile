@@ -70,7 +70,6 @@ RUN set -ex \
     && mkdir -p /var/lib/ocsinventory-reports \
     && mkdir -p /var/lib/ocsinventory-reports/snmp \
     && mkdir -p /var/lib/ocsinventory-reports/download \
-    && mkdir -p /var/lib/ocsinventory-reports/ipd \
     && mkdir -p /var/log/ocsinventory-server \
     && ln -s /dev/stdout /var/log/ocsinventory-server/activity.log \
     && apt-get update \
@@ -105,8 +104,6 @@ RUN set -ex \
        | sed -e "s#OCSREPORTS_ALIAS#/ocsreports#" \
        | sed -e "s#PATH_TO_PACKAGES_DIR#/var/lib/ocsinventory-reports/download#g" \
        | sed -e "s#PACKAGES_ALIAS#/download#" \
-       | sed -e "s#PATH_TO_IPD_DIR#/var/lib/ocsinventory-reports/ipd#g" \
-       | sed -e "s#IPD_ALIAS#/ipd#" \
        | sed -e "s#PATH_TO_SNMP_DIR#/var/lib/ocsinventory-reports/snmp#g" \
        | sed -e "s#SNMP_ALIAS#/snmp#" \
        > /etc/apache2/conf-available/ocsinventory-reports.conf \
@@ -126,7 +123,6 @@ RUN set -ex \
     && a2enconf ocsinventory-server \
     && a2enconf ocsinventory-reports \
     && a2enconf ocsinventory-restapi \
-    && chmod 755 /usr/share/ocsinventory-reports/ocsreports/ipdiscover-util.pl \
     && echo Cleanup build modules... \
     && apt-get purge -y $BUILD_PACKAGES \
     && apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false \
@@ -137,8 +133,8 @@ RUN set -ex \
        /usr/share/ocsinventory-reports \
        /var/lib/ocsinventory-reports \
        /var/log/ocsinventory-server \
-    && chown -R root:www-data /var/lib/ocsinventory-reports/snmp /var/lib/ocsinventory-reports/download /var/lib/ocsinventory-reports/ipd \
-    && chmod -R g+w,o-w /var/lib/ocsinventory-reports/snmp  /var/lib/ocsinventory-reports/download /var/lib/ocsinventory-reports/ipd \
+    && chown -R root:www-data /var/lib/ocsinventory-reports/snmp /var/lib/ocsinventory-reports/download \
+    && chmod -R g+w,o-w /var/lib/ocsinventory-reports/snmp  /var/lib/ocsinventory-reports/download \
     && chmod gou+x /usr/share/ocsinventory-reports/ocsreports/ipdiscover-util.pl
 ###################### DATA VOLUME  ########################
 VOLUME ["/var/lib/ocsinventory-reports"]

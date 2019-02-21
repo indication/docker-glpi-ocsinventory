@@ -67,6 +67,18 @@ RUN set -ex \
     && tar -xzf /tmp/$PLUGIN_NAME.tar.gz --strip-components=1 \
     && cd ../.. \
     && rm /tmp/$PLUGIN_NAME.tar.gz
+# setup plugins
+RUN set -ex \
+    && export PLUGIN_VERSION=1.1.9 \
+    && export PLUGIN_NAME=browsernotification \
+    && export PLUGIN_MD5SUM=a3be42ebc136aebe180b08859e4662dd \
+    && curl -o /tmp/$PLUGIN_NAME.tar.gz -sSL https://github.com/edgardmessias/browsernotification/archive/$PLUGIN_VERSION.tar.gz \
+    && (echo "$PLUGIN_MD5SUM */tmp/$PLUGIN_NAME.tar.gz" | md5sum -c || (md5sum /tmp/$PLUGIN_NAME.tar.gz && exit 1)) \
+    && mkdir -p plugins/$PLUGIN_NAME \
+    && cd plugins/$PLUGIN_NAME \
+    && tar -xzf /tmp/$PLUGIN_NAME.tar.gz --strip-components=1 \
+    && cd ../.. \
+    && rm /tmp/$PLUGIN_NAME.tar.gz
     
 USER root
 

@@ -12,5 +12,4 @@ define('GLPI_SESSION_DIR',    GLPI_VAR_DIR . '/_sessions');
 define('GLPI_TMP_DIR',        GLPI_VAR_DIR . '/_tmp');
 define('GLPI_UPLOAD_DIR',     GLPI_VAR_DIR . '/_uploads');
 define('GLPI_CACHE_DIR',      GLPI_VAR_DIR . '/_cache');
-
-define('GLPI_LOG_DIR', '/var/log/glpi');
+define('GLPI_LOG_DIR',        GLPI_VAR_DIR . '/_logs');

@@ -45,6 +45,7 @@ RUN set -ex \
     && (echo "$GLPI_MD5SUM */tmp/glpi.tar.gz" | md5sum -c || (md5sum /tmp/glpi.tar.gz && exit 1)) \
     && tar -xzf /tmp/glpi.tar.gz --strip-components=1 \
     && rm install/install.php \
+    && rm -rf files \
     && rm /tmp/glpi.tar.gz
 RUN set -ex \
     && curl -o /tmp/font.zip -sSL https://oscdl.ipa.go.jp/IPAfont/ipag00303.zip \
@@ -81,19 +82,22 @@ COPY supervisord.conf \
      local_define.php \
      /tmp/
 RUN set -ex \
-      && mkdir -p /etc/glpi /var/log/glpi \
-      && mv /tmp/local_define.php /etc/glpi/ \
-      && chown www-data:www-data -R /etc/glpi /var/lib/glpi /var/log/glpi \
+      && echo "*/5    *       *       *       *       php /var/www/html/glpi/front/cron.php >& /dev/null" > crond.txt \
+      && echo "*/5    *       *       *       *       /var/www/html/glpi/plugins/ocsinventoryng/scripts/ocsng_fullsync.sh --thread_nbr=2 " >> crond.txt \
+      && echo "*/5    *       *       *       *       /var/www/html/glpi/plugins/ocsinventoryng/scripts/ocsng_snmpfullsync.sh --thread_nbr=2 " >> crond.txt \
+      && cat crond.txt | crontab -u www-data - && rm crond.txt \
+      && chmod +x /var/www/html/glpi/plugins/ocsinventoryng/scripts/*.sh \
+      && mv /tmp/local_define.php /var/www/html/glpi/config/ \
       && mv /tmp/supervisord.conf /tmp/h2o.conf /etc/ \
       && chmod 644 /etc/supervisord.conf /etc/h2o.conf \
       && mv /tmp/zzz-www.conf /usr/local/etc/php-fpm.d/ \
       && mkdir -p /var/run/php-fpm \
       && chown www-data:www-data /var/run/php-fpm \
-      && mv /tmp/entrypoint.sh /etc/glpi/ \
-      && chmod +x /etc/glpi/entrypoint.sh
+      && mv /tmp/entrypoint.sh / \
+      && chmod +x /entrypoint.sh
 
 # Put entry point to execute
-ENTRYPOINT ["/etc/glpi/entrypoint.sh"]
+ENTRYPOINT ["/entrypoint.sh"]
 
 # Startup supervisor
 CMD ["supervisord", "-c", "/etc/supervisord.conf"]

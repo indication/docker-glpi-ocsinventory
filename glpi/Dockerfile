@@ -35,8 +35,8 @@ VOLUME ["/var/lib/glpi"]
 WORKDIR /var/www/html/glpi
 RUN chown -R www-data:www-data /var/www/html
 USER www-data
-ENV GLPI_VERSION 9.3.3
-ENV GLPI_MD5SUM edf282d5e4d5f264df50d30819138acd
+ENV GLPI_VERSION 9.4.0
+ENV GLPI_MD5SUM d48e4e03520a2a8f3c986c7822506ce3
 # Clone and dependencies
 # Copy all configuration files and add alias(ln) to /glpi
 RUN set -ex \
@@ -95,6 +95,7 @@ COPY supervisord.conf \
      /tmp/
 RUN set -ex \
       && echo "*/5    *       *       *       *       php /var/www/html/glpi/front/cron.php >& /dev/null" > crond.txt \
+      && echo "*/5    *       *       *       *       /var/www/html/glpi/bin/console glpi:ldap:synchronize_users  | grep -v 'No active LDAP server found.'" >> crond.txt \
       && echo "*/5    *       *       *       *       /var/www/html/glpi/plugins/ocsinventoryng/scripts/ocsng_fullsync.sh --thread_nbr=2 " >> crond.txt \
       && echo "*/5    *       *       *       *       /var/www/html/glpi/plugins/ocsinventoryng/scripts/ocsng_snmpfullsync.sh --thread_nbr=2 " >> crond.txt \
       && cat crond.txt | crontab -u www-data - && rm crond.txt \

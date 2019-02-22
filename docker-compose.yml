@@ -1,0 +1,14 @@
+version: '2'
+services:
+  glpidb:
+    # snipe-it only supports 5.x
+    image: mysql:5
+    environment:
+      - MYSQL_ROOT_PASSWORD=rootpass
+      - MYSQL_DATABASE=glpi
+      - MYSQL_USER=glpi
+      - MYSQL_PASSWORD=glpipass
+    command: --sql_mode=""
+#    volumes:
+#      - /mysql/dumps/dir:/docker-entrypoint-initdb.d
+

@@ -1,5 +1,15 @@
 version: '2'
 services:
+  ocsinventory:
+    image: ocsinventory/ocsinventory-docker-image:2.5
+    ports:
+      - 83:80
+    environment:
+      - OCS_DBNAME=glpidb
+      - OCS_DBSERVER_READ =glpidb
+      - OCS_DBSERVER_WRITE=glpidb
+      - OCS_DBUSER=ocsinventory
+      - OCS_DBPASS=ocsinventorypass
   glpidb:
     # snipe-it only supports 5.x
     image: mysql:5

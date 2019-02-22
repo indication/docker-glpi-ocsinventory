@@ -1,5 +1,16 @@
 version: '2'
 services:
+  glpi:
+    build: ./glpi
+    ports:
+      - 82:80
+    environment:
+      - DB_HOST=glpidb
+      - DB_DATABASE=glpi
+      - DB_USERNAME=glpi
+      - DB_PASSWORD=glpipass
+    links:
+      - glpidb:glpidb
   ocsinventory:
     build: ./ocsinventory
     ports:

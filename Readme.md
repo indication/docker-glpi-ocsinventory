@@ -17,6 +17,7 @@ Installation
 2. Run `docker-compose build`
 3. Run `docker-compose up -d`
 4. Access from browser
+    http://docker-host:82/glpi for GLPI
     http://docker-host:83/ocsreports   for OCS Inventory NG Console
     http://docker-host:83/download     for OCS Inventory NG download place (internal)
     http://docker-host:83/snmp         for OCS Inventory NG snmp place (internal)

@@ -3,6 +3,10 @@ docker-glpi-ocsinventory
 
 Dockerfile for  [GLPI](https://glpi-project.org/) ([github](https://github.com/glpi-project/glpi)) and [OCS Inventory](https://www.ocsinventory-ng.org/en/) ([github](https://github.com/OCSInventory-NG))
 
+Aggregated version
+------------
+9.3.3 + 2.5 = 11.7.3
+
 License
 ------------
 Except the codes from origin, anothers are WTFPL2.

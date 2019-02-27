@@ -1,7 +1,7 @@
 docker-glpi-ocsinventory
 ====================
 
-Dockerfile for  [GLPI](https://glpi-project.org/) ([github](https://github.com/glpi-project/glpi)) and [OCS Inventory](https://www.ocsinventory-ng.org/en/)
+Dockerfile for  [GLPI](https://glpi-project.org/) ([github](https://github.com/glpi-project/glpi)) and [OCS Inventory](https://www.ocsinventory-ng.org/en/) ([github](https://github.com/OCSInventory-NG))
 
 License
 ------------
@@ -17,6 +17,12 @@ Installation
 2. Run `docker-compose build`
 3. Run `docker-compose up -d`
 4. Access from browser
+    http://docker-host:83/ocsreports   for OCS Inventory NG Console
+    http://docker-host:83/download     for OCS Inventory NG download place (internal)
+    http://docker-host:83/snmp         for OCS Inventory NG snmp place (internal)
+    http://docker-host:83/ocsplugins   for OCS Inventory NG plugins (internal)
+    http://docker-host:83/ocsinterface for OCS Inventory NG report from client
+    http://docker-host:83/ocsapi       for OCS Inventory NG REST API (currently disabled)
 
 Current version
 ------------

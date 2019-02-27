@@ -5,7 +5,7 @@ Dockerfile for  [GLPI](https://glpi-project.org/) ([github](https://github.com/g
 
 Aggregated version
 ------------
-9.3.3 + 2.5 = 11.7.3
+9.4.0 + 2.5 = 11.9.0
 
 License
 ------------
@@ -34,8 +34,8 @@ Current version
 
 |Docker      |Package      |Version    |Note   |
 |------------|-------------|-----------|-------|
-|glpi        |GLPI         |9.3.3      |from github|
-|glpi        |Plugin: [ocsinventoryng](https://github.com/pluginsGLPI/ocsinventoryng)|1.5.6|from github|
+|glpi        |GLPI         |9.4.0      |from github|
+|glpi        |Plugin: [ocsinventoryng](https://github.com/pluginsGLPI/ocsinventoryng)|1.6.0|from github|
 |glpi        |Plugin: [browsernotification](https://github.com/edgardmessias/browsernotification)|1.1.9|from github|
 |glpi        |PHP(base)    |7.2-fpm-alpine  |Official|
 |glpi        |H2O          |-          |alpine linux provided|

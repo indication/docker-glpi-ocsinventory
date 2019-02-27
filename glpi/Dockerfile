@@ -35,8 +35,8 @@ VOLUME ["/var/lib/glpi"]
 WORKDIR /var/www/html/glpi
 RUN chown -R www-data:www-data /var/www/html
 USER www-data
-ENV GLPI_VERSION 9.3.3
-ENV GLPI_MD5SUM edf282d5e4d5f264df50d30819138acd
+ENV GLPI_VERSION 9.4.0
+ENV GLPI_MD5SUM d48e4e03520a2a8f3c986c7822506ce3
 # Clone and dependencies
 # Copy all configuration files and add alias(ln) to /glpi
 RUN set -ex \
@@ -57,9 +57,9 @@ RUN set -ex \
     
 # setup plugins
 RUN set -ex \
-    && export PLUGIN_VERSION=1.5.6 \
+    && export PLUGIN_VERSION=1.6.0 \
     && export PLUGIN_NAME=ocsinventoryng \
-    && export PLUGIN_MD5SUM=b31000dc9be0f79fee40a04bdd7332bf \
+    && export PLUGIN_MD5SUM=8e328b48c6549d075e8ee8519907ff92 \
     && curl -o /tmp/$PLUGIN_NAME.tar.gz -sSL https://github.com/pluginsGLPI/$PLUGIN_NAME/releases/download/$PLUGIN_VERSION/glpi-$PLUGIN_NAME-$PLUGIN_VERSION.tar.gz \
     && (echo "$PLUGIN_MD5SUM */tmp/$PLUGIN_NAME.tar.gz" | md5sum -c || (md5sum /tmp/$PLUGIN_NAME.tar.gz && exit 1)) \
     && mkdir -p plugins/$PLUGIN_NAME \
@@ -95,6 +95,7 @@ COPY supervisord.conf \
      /tmp/
 RUN set -ex \
       && echo "*/5    *       *       *       *       php /var/www/html/glpi/front/cron.php >& /dev/null" > crond.txt \
+      && echo "*/5    *       *       *       *       /var/www/html/glpi/bin/console glpi:ldap:synchronize_users  | grep -v 'No active LDAP server found.'" >> crond.txt \
       && echo "*/5    *       *       *       *       /var/www/html/glpi/plugins/ocsinventoryng/scripts/ocsng_fullsync.sh --thread_nbr=2 " >> crond.txt \
       && echo "*/5    *       *       *       *       /var/www/html/glpi/plugins/ocsinventoryng/scripts/ocsng_snmpfullsync.sh --thread_nbr=2 " >> crond.txt \
       && cat crond.txt | crontab -u www-data - && rm crond.txt \

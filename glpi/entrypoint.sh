@@ -9,12 +9,13 @@ MYSQLCMDBASE="mysql --host=${DB_HOST} --port=${DB_PORT:-3306} -ns --user=${DB_US
 $MYSQLCMDBASE -w --connect-timeout=100 -e "SELECT 'OK';" ||  echo "Failed to access ${DB_HOST}:${DB_PORT:-3306}" || exit 1;
 # setup for glpi
 CONFFILE=/var/www/html/glpi/config/config_db.php
+GLPICLI=/var/www/html/glpi/bin/console
 if [ ! -f "$CONFFILE" ] ; then
   echo Setup first data
   $MYSQLCMDBASE -w --connect-timeout=100 -e "SELECT * FROM glpi_configs WHERE 1=0;"
   if [ $? -gt 0 ]; then
       echo Initialize data
-      sudo -u www-data -- php /var/www/html/glpi/scripts/cliinstall.php --host=${DB_HOST}:${DB_PORT:-3306} --user=${DB_USERNAME} --pass=${DB_PASSWORD} --db=${DB_DATABASE} --lang=${INIT_LANG:-en_US}
+      sudo -u www-data -- $GLPICLI glpi:database:install --db-host=${DB_HOST} --db-port=${DB_PORT:-3306} --db-user=${DB_USERNAME} --db-password=${DB_PASSWORD} --db-name=${DB_DATABASE} --default-language=${INIT_LANG:-en_US}
   else
       echo Run update
       echo "<?" > $CONFFILE
@@ -25,7 +26,8 @@ if [ ! -f "$CONFFILE" ] ; then
       echo "   public \$dbdefault  = '${DB_DATABASE}';" >> $CONFFILE
       echo "}" >> $CONFFILE
       sudo chown www-data: $CONFFILE
-      sudo -u www-data -- php /var/www/html/glpi/scripts/cliupdate.php
+      sudo -u www-data -- $GLPICLI glpi:database:update
+      sudo -u www-data -- $GLPICLI glpi:database:check
   fi
   mkdir -p /var/lib/glpi/_cron
   mkdir -p /var/lib/glpi/_dumps

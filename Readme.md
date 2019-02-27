@@ -17,6 +17,7 @@ Installation
 2. Run `docker-compose build`
 3. Run `docker-compose up -d`
 4. Access from browser
+    http://docker-host:82/glpi for GLPI
 
 Current version
 ------------

@@ -24,7 +24,7 @@ Current version
 |Docker      |Package      |Version    |Note   |
 |------------|-------------|-----------|-------|
 |glpi        |GLPI         |9.4.0      |from github|
-|glpi        |Plugin: [ocsinventoryng](https://github.com/pluginsGLPI/ocsinventoryng)|1.5.6(error)|from github|
+|glpi        |Plugin: [ocsinventoryng](https://github.com/pluginsGLPI/ocsinventoryng)|1.6.0|from github|
 |glpi        |Plugin: [browsernotification](https://github.com/edgardmessias/browsernotification)|1.1.9|from github|
 |glpi        |PHP(base)    |7.2-fpm-alpine  |Official|
 |glpi        |H2O          |-          |alpine linux provided|

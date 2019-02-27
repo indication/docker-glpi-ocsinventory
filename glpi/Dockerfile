@@ -57,9 +57,9 @@ RUN set -ex \
     
 # setup plugins
 RUN set -ex \
-    && export PLUGIN_VERSION=1.5.6 \
+    && export PLUGIN_VERSION=1.6.0 \
     && export PLUGIN_NAME=ocsinventoryng \
-    && export PLUGIN_MD5SUM=b31000dc9be0f79fee40a04bdd7332bf \
+    && export PLUGIN_MD5SUM=8e328b48c6549d075e8ee8519907ff92 \
     && curl -o /tmp/$PLUGIN_NAME.tar.gz -sSL https://github.com/pluginsGLPI/$PLUGIN_NAME/releases/download/$PLUGIN_VERSION/glpi-$PLUGIN_NAME-$PLUGIN_VERSION.tar.gz \
     && (echo "$PLUGIN_MD5SUM */tmp/$PLUGIN_NAME.tar.gz" | md5sum -c || (md5sum /tmp/$PLUGIN_NAME.tar.gz && exit 1)) \
     && mkdir -p plugins/$PLUGIN_NAME \

@@ -13,7 +13,8 @@ services:
     links:
       - glpidb:glpidb
   ocsinventory:
-    build: ./ocsinventory
+    image: indication/ocsinventory-ng:2.5
+    #build: ./ocsinventory
     ports:
       - 83:80
     environment:
@@ -31,6 +32,7 @@ services:
       - MYSQL_ROOT_PASSWORD=rootpass
       # If you want to change password, 
       # see mysql.init/10_glpi.sql
+      # see mysql.init/11_ocsinventory.sql
     command: --sql_mode=""
     volumes:
        - ./mysql.init:/docker-entrypoint-initdb.d:ro

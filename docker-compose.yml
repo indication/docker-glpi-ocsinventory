@@ -1,7 +1,8 @@
 version: '2'
 services:
   glpi:
-    build: ./glpi
+    image: indication/glpi-ocsinventory:9.4.0
+    #build: ./glpi
     ports:
       - 82:80
     environment:
@@ -24,13 +25,12 @@ services:
     links:
       - glpidb:glpidb
   glpidb:
-    # snipe-it only supports 5.x
+    # the container only supports 5.x
     image: mysql:5
     environment:
       - MYSQL_ROOT_PASSWORD=rootpass
-      #- MYSQL_DATABASE=glpi
-      #- MYSQL_USER=glpi
-      #- MYSQL_PASSWORD=glpipass
+      # If you want to change password, 
+      # see mysql.init/10_glpi.sql
     command: --sql_mode=""
     volumes:
        - ./mysql.init:/docker-entrypoint-initdb.d:ro

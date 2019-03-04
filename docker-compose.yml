@@ -1,7 +1,8 @@
 version: '2'
 services:
   ocsinventory:
-    build: ./ocsinventory
+    image: indication/ocsinventory-ng:2.5
+    #build: ./ocsinventory
     ports:
       - 83:80
     environment:
@@ -13,13 +14,12 @@ services:
     links:
       - glpidb:glpidb
   glpidb:
-    # snipe-it only supports 5.x
+    # the container only supports 5.x
     image: mysql:5
     environment:
       - MYSQL_ROOT_PASSWORD=rootpass
-      #- MYSQL_DATABASE=glpi
-      #- MYSQL_USER=glpi
-      #- MYSQL_PASSWORD=glpipass
+      # If you want to change password, 
+      # see mysql.init/11_ocsinventory.sql
     command: --sql_mode=""
     volumes:
        - ./mysql.init:/docker-entrypoint-initdb.d:ro

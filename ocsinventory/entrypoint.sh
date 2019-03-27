@@ -8,8 +8,18 @@
 : "${OCS_DBPASS:?OCS_DBPASS needs to be set}"
 MYSQLCMDBASE="mysql --port=${OCS_DB_PORT:-3306} -ns --user=${OCS_DBUSER} --password=${OCS_DBPASS} --database=${OCS_DBNAME}"
 $MYSQLCMDBASE  --host=${OCS_DBSERVER_READ} -w --connect-timeout=100 -e "SELECT 'DBSERVER_READ OK';" ||  echo "Failed to access ${OCS_DBSERVER_READ}:${OCS_DB_PORT:-3306}" || exit 1;
-$MYSQLCMDBASE  --host=${OCS_DBSERVER_WRITE} -w --connect-timeout=100 -e "SELECT 'DBSERVER_WRITE OK';" ||  echo "Failed to access ${OCS_DBSERVER_WRITE}:${OCS_DB_PORT:-3306}" || exit 1;
-
+for i in `seq 1 20`
+do
+  $MYSQLCMDBASE  --host=${OCS_DBSERVER_WRITE} -w --connect-timeout=100 -e "SELECT 'DBSERVER_WRITE OK';"
+  if [ $? -eq 0 ]; then
+    break
+  fi
+  if [ $i -eq 20 ]; then
+    echo "Failed to access ${DB_HOST}:${DB_PORT:-3306}"
+    exit 1
+  fi
+  sleep 2
+done
 #if [ `$MYSQLCMDBASE -w --connect-timeout=100 -e "show tables;" | wc -l` -eq "0" ] ; then
 if [ ! -f "/usr/share/ocsinventory-reports/ocsreports/.buildready" ] ; then
   touch /usr/share/ocsinventory-reports/ocsreports/.buildready

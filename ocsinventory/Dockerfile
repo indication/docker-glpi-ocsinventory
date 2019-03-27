@@ -71,7 +71,7 @@ RUN set -ex \
     && mkdir -p /var/lib/ocsinventory-reports/snmp \
     && mkdir -p /var/lib/ocsinventory-reports/download \
     && mkdir -p /var/log/ocsinventory-server \
-    && ln -s /dev/stdout /var/log/ocsinventory-server/activity.log \
+    && chown www-data: /var/log/ocsinventory-server \
     && apt-get update \
     && apt-get install -y --no-install-recommends $BUILD_PACKAGES \
     && echo Create environment from cpan... \

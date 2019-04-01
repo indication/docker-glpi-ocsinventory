@@ -68,8 +68,6 @@ RUN set -ex \
     && mkdir -p /etc/ocsinventory-server/perl \
     && mkdir -p /usr/share/ocsinventory-reports \
     && mkdir -p /var/lib/ocsinventory-reports \
-    && mkdir -p /var/lib/ocsinventory-reports/snmp \
-    && mkdir -p /var/lib/ocsinventory-reports/download \
     && mkdir -p /var/log/ocsinventory-server \
     && chown www-data: /var/log/ocsinventory-server \
     && apt-get update \
@@ -133,8 +131,6 @@ RUN set -ex \
        /usr/share/ocsinventory-reports \
        /var/lib/ocsinventory-reports \
        /var/log/ocsinventory-server \
-    && chown -R root:www-data /var/lib/ocsinventory-reports/snmp /var/lib/ocsinventory-reports/download \
-    && chmod -R g+w,o-w /var/lib/ocsinventory-reports/snmp  /var/lib/ocsinventory-reports/download \
     && chmod gou+x /usr/share/ocsinventory-reports/ocsreports/ipdiscover-util.pl
 ###################### DATA VOLUME  ########################
 VOLUME ["/var/lib/ocsinventory-reports"]

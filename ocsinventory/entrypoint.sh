@@ -39,7 +39,12 @@ if [ ! -f "/usr/share/ocsinventory-reports/ocsreports/.buildready" ] ; then
    /var/lib/ocsinventory-reports
 fi
 
-# cleanup files
-#rm /var/run/fcgiwrap/fcgiwrap.sock
+if [ ! -d /var/lib/ocsinventory-reports/ipd ]; then
+  mkdir -p /var/lib/ocsinventory-reports/snmp
+  mkdir -p /var/lib/ocsinventory-reports/download
+  mkdir -p /var/lib/ocsinventory-reports/ipd
+  chown www-data: -R /var/lib/ocsinventory-reports
+  chmod -R g+w,o-w -R /var/lib/ocsinventory-reports/
+fi
 
 exec $@

@@ -5,7 +5,7 @@ Dockerfile for  [GLPI](https://glpi-project.org/) ([github](https://github.com/g
 
 Aggregated version
 ------------
-9.4.0 + 2.5 = 11.9.0
+9.4.1 + 2.5 = 11.9.1
 
 License
 ------------
@@ -28,6 +28,23 @@ Installation
     http://docker-host:83/ocsplugins   for OCS Inventory NG plugins (internal)
     http://docker-host:83/ocsinterface for OCS Inventory NG report from client
     http://docker-host:83/ocsapi       for OCS Inventory NG REST API (currently disabled)
+
+### Setup: Synchronize OCS Inventory on GLPI
+
+1. Access to GLPI
+2. Goto Setup, Plugin
+3. Install and enable `OCS Inventory NG`
+4. Click `OCS Inventory NG` on plugin list
+5. Goto `OCSNG servers` and Click `+` on breadcubs(`Home->Tool->...`) near the search icon
+6. Input Hostname: glpidb, Database: ocsinventory, User: ocsinventory, Password: ocsinventorypass (default)
+7. Input `Synchronisation method`: Expert
+8. Input another boolean parameters what you want
+9. Click add
+10. Click `OCS Inventory NG` on breadcubs(`Home->Tool->...`)
+11. Select Name, Click `Configuration of OCSNG server : ...`
+12. Setup `Datas to import`
+
+Note: There is background task(cron) to synchronize on GLPI container
 
 Current version
 ------------

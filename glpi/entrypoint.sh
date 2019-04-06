@@ -6,7 +6,20 @@
 : "${DB_USERNAME:?DB_USERNAME needs to be set}"
 : "${DB_PASSWORD:?DB_PASSWORD needs to be set}"
 MYSQLCMDBASE="mysql --host=${DB_HOST} --port=${DB_PORT:-3306} -ns --user=${DB_USERNAME} --password=${DB_PASSWORD} --database=${DB_DATABASE}"
-$MYSQLCMDBASE -w --connect-timeout=100 -e "SELECT 'OK';" ||  echo "Failed to access ${DB_HOST}:${DB_PORT:-3306}" || exit 1;
+
+for i in `seq 1 20`
+do
+  $MYSQLCMDBASE -w --connect-timeout=100 -e "SELECT 'OK';"
+  if [ $? -eq 0 ]; then
+    break
+  fi
+  if [ $i -eq 20 ]; then
+    echo "Failed to access ${DB_HOST}:${DB_PORT:-3306}"
+    exit 1
+  fi
+  sleep 2
+done
+
 # setup for glpi
 CONFFILE=/var/www/html/glpi/config/config_db.php
 GLPICLI=/var/www/html/glpi/bin/console

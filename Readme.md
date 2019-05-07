@@ -29,7 +29,7 @@ Current version
 
 |Docker      |Package      |Version    |Note   |
 |------------|-------------|-----------|-------|
-|ocsinventory|OCS Inventory|2.5        |from github|
+|ocsinventory|OCS Inventory|2.6        |from github|
 |ocsinventory|debian(base) |slim-latest|Official|
 |ocsinventory|Perl         |5.28       |debian provided|
 |ocsinventory|Apache       |2.4        |debian provided|

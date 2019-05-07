@@ -5,7 +5,7 @@ Dockerfile for  [GLPI](https://glpi-project.org/) ([github](https://github.com/g
 
 Aggregated version
 ------------
-9.4.1 + 2.6 = 11.10.1
+9.4.2 + 2.6 = 11.10.2
 
 License
 ------------
@@ -51,9 +51,10 @@ Current version
 
 |Docker      |Package      |Version    |Note   |
 |------------|-------------|-----------|-------|
-|glpi        |GLPI         |9.4.1.1    |from github|
+|glpi        |GLPI         |9.4.2      |from github|
 |glpi        |Plugin: [ocsinventoryng](https://github.com/pluginsGLPI/ocsinventoryng)|1.6.0|from github|
 |glpi        |Plugin: [browsernotification](https://github.com/edgardmessias/browsernotification)|1.1.9|from github|
+|glpi        |Patch:  [LDAPS Patch](https://github.com/indication/glpi/commit/20cdeba65f7c2508fbd9bdf895bedb67bcd7acdc) |-     |from github, Allow to connect LDAP SSL (not TLS)|
 |glpi        |PHP(base)    |7.2-fpm-alpine  |Official|
 |glpi        |H2O          |-          |alpine linux provided|
 |glpi        |[IPA font](https://www.ipa.go.jp/osc/ipafont)|Ver.003.01|[IPA font license](https://ipafont.ipa.go.jp/ipa_font_license_v1-html#en)|

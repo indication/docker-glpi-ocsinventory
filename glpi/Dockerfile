@@ -35,8 +35,8 @@ VOLUME ["/var/lib/glpi"]
 WORKDIR /var/www/html/glpi
 RUN chown -R www-data:www-data /var/www/html
 USER www-data
-ENV GLPI_VERSION 9.4.1.1
-ENV GLPI_MD5SUM a1080b87ad9024065964a8bfea402fab
+ENV GLPI_VERSION 9.4.2
+ENV GLPI_MD5SUM fc1cc7c81741f20c79e61497e7a80c19
 # Clone and dependencies
 # Copy all configuration files and add alias(ln) to /glpi
 RUN set -ex \
@@ -81,6 +81,14 @@ RUN set -ex \
     
 USER root
 
+# Local patch for LDAPS
+RUN set -ex \
+    && apk add -U --no-cache --virtual .patch-buildapps patch \
+    && curl -o /tmp/ldaps.patch -sSL https://github.com/indication/glpi/commit/20cdeba65f7c2508fbd9bdf895bedb67bcd7acdc.patch \
+    && cat /tmp/ldaps.patch \
+    && sudo -u www-data patch -u -p1 -F100 < /tmp/ldaps.patch \
+    && rm /tmp/ldaps.patch \
+    && apk del --purge .patch-buildapps
 
 ####################### SERVER SETUP #######################
 EXPOSE 80

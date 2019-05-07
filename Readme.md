@@ -5,7 +5,7 @@ Dockerfile for  [GLPI](https://glpi-project.org/) ([github](https://github.com/g
 
 Aggregated version
 ------------
-9.4.1 + 2.5 = 11.9.1
+9.4.1 + 2.6 = 11.10.1
 
 License
 ------------
@@ -57,7 +57,7 @@ Current version
 |glpi        |PHP(base)    |7.2-fpm-alpine  |Official|
 |glpi        |H2O          |-          |alpine linux provided|
 |glpi        |[IPA font](https://www.ipa.go.jp/osc/ipafont)|Ver.003.01|[IPA font license](https://ipafont.ipa.go.jp/ipa_font_license_v1-html#en)|
-|ocsinventory|OCS Inventory|2.5        |from github|
+|ocsinventory|OCS Inventory|2.6        |from github|
 |ocsinventory|debian(base) |slim-latest|Official|
 |ocsinventory|Perl         |5.28       |debian provided|
 |ocsinventory|Apache       |2.4        |debian provided|

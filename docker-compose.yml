@@ -13,7 +13,7 @@ services:
     links:
       - glpidb:glpidb
   ocsinventory:
-    image: indication/ocsinventory-ng:2.5
+    image: indication/ocsinventory-ng:latest
     #build: ./ocsinventory
     ports:
       - 83:80

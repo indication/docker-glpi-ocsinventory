@@ -1,7 +1,7 @@
 version: '2'
 services:
   glpi:
-    image: indication/glpi-ocsinventory:9.4.0
+    image: indication/glpi-ocsinventory:latest
     #build: ./glpi
     ports:
       - 82:80

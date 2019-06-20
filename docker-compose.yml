@@ -10,6 +10,7 @@ services:
       - DB_DATABASE=glpi
       - DB_USERNAME=glpi
       - DB_PASSWORD=glpipass
+      - TZ=UTC
     links:
       - glpidb:glpidb
   glpidb:

@@ -56,6 +56,13 @@ if [ ! -f "$CONFFILE" ] ; then
   mkdir -p /var/lib/glpi/_cache
   chown -R www-data: /var/lib/glpi
 fi
+# setup timezone for php
+if test -z "$TZ" ; then
+  rm /usr/local/etc/php/conf.d/zzz-timezone.ini
+else
+  echo "Setup timezone as ${TZ}"
+  echo "date.timezone = '${TZ}'" > /usr/local/etc/php/conf.d/zzz-timezone.ini
+fi
 
 
 exec $@

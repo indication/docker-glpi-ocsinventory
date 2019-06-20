@@ -32,3 +32,65 @@ Current version
 |glpi        |H2O          |-          |alpine linux provided|
 |glpi        |[IPA font](https://www.ipa.go.jp/osc/ipafont)|Ver.003.01|[IPA font license](https://ipafont.ipa.go.jp/ipa_font_license_v1-html#en)|
 |glpidb      |MySQL        |5          |Minor version is not specified|
+
+
+GLPI on docker
+============
+
+Environment variables
+-------------
+
+|Key        |Description                |Example     |
+|-----------|---------------------------|------------|
+|DB_HOST    |MySQL hostname             |glpidb      |
+|DB_DATABASE|MySQL Database name        |glpi        |
+|DB_USERNAME|MySQL user name for connect|glpi        |
+|DB_PASSWORD|MySQL password for connect |glpipass    |
+|TZ         |Timezone                   |Asia/Tokyo  |
+
+
+Volumes
+------------
+
+- /var/lib/glpi
+    - GLPI datastorage
+
+Database
+------------
+
+- MySQL 5.x
+- MySQL 8.x may NOT work
+- You would be able to connect with mariadb
+
+Port and HTTP requests
+------------
+
+- HTTP port to 80
+- Subdirectory: glpi
+- Recommend location behind reverse proxy (eg. nginx)
+
+Setup
+------------
+
+- First user is `glpi`. Password is `glpi`.
+
+... write more later....
+
+Internals: cron
+-------------
+
+You do not need to call sync from external ways.
+The cron is working at this container.
+
+|Command                    |Frenquency     |Note               |
+|---------------------------|---------------|-------------------|
+|cron.php                   |Every 5 minutes|glpi cron          |
+|glpi:ldap:synchronize_users|Every 5 minutes|Sync to LDAP if set|
+|(plugin)ocsng_fullsync     |Every 5 minutes|OCS Inventory sync |
+|(plugin)ocsng_snmpfullsync |Every 5 minutes|OCS Inventory sync |
+
+Security
+-------------
+
+- Block access `/glpi/config` as 403
+- Hide `x-powered-by`

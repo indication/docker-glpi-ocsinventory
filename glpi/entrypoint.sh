@@ -24,6 +24,19 @@ done
 CONFFILE=/var/www/html/glpi/config/config_db.php
 GLPICLI=/var/www/html/glpi/bin/console
 if [ ! -f "$CONFFILE" ] ; then
+  mkdir -p /var/lib/glpi/_cron
+  mkdir -p /var/lib/glpi/_dumps
+  mkdir -p /var/lib/glpi/_graphs
+  mkdir -p /var/lib/glpi/_lock
+  mkdir -p /var/lib/glpi/_pictures
+  mkdir -p /var/lib/glpi/_plugins
+  mkdir -p /var/lib/glpi/_rss
+  mkdir -p /var/lib/glpi/_sessions
+  mkdir -p /var/lib/glpi/_logs
+  mkdir -p /var/lib/glpi/_tmp
+  mkdir -p /var/lib/glpi/_uploads
+  mkdir -p /var/lib/glpi/_cache
+  chown -R www-data: /var/lib/glpi
   echo Setup first data
   $MYSQLCMDBASE -w --connect-timeout=100 -e "SELECT * FROM glpi_configs WHERE 1=0;"
   if [ $? -gt 0 ]; then
@@ -42,19 +55,6 @@ if [ ! -f "$CONFFILE" ] ; then
       sudo -u www-data -- $GLPICLI glpi:database:update
       sudo -u www-data -- $GLPICLI glpi:database:check
   fi
-  mkdir -p /var/lib/glpi/_cron
-  mkdir -p /var/lib/glpi/_dumps
-  mkdir -p /var/lib/glpi/_graphs
-  mkdir -p /var/lib/glpi/_lock
-  mkdir -p /var/lib/glpi/_pictures
-  mkdir -p /var/lib/glpi/_plugins
-  mkdir -p /var/lib/glpi/_rss
-  mkdir -p /var/lib/glpi/_sessions
-  mkdir -p /var/lib/glpi/_logs
-  mkdir -p /var/lib/glpi/_tmp
-  mkdir -p /var/lib/glpi/_uploads
-  mkdir -p /var/lib/glpi/_cache
-  chown -R www-data: /var/lib/glpi
 fi
 # setup timezone for php
 if test -z "$TZ" ; then

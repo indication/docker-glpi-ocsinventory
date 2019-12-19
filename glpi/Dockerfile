@@ -35,8 +35,8 @@ VOLUME ["/var/lib/glpi"]
 WORKDIR /var/www/html/glpi
 RUN chown -R www-data:www-data /var/www/html
 USER www-data
-ENV GLPI_VERSION 9.4.4
-ENV GLPI_MD5SUM ad1ce911a8bb8947a23481f44e55d499
+ENV GLPI_VERSION 9.4.5
+ENV GLPI_MD5SUM 595b8349424f209a5ad6cd9890e7d92f
 # Clone and dependencies
 # Copy all configuration files and add alias(ln) to /glpi
 RUN set -ex \
@@ -47,7 +47,7 @@ RUN set -ex \
     && rm -rf files \
     && rm /tmp/glpi.tar.gz
 RUN set -ex \
-    && curl -o /tmp/font.zip -sSL https://oscdl.ipa.go.jp/IPAfont/ipag00303.zip \
+    && curl -o /tmp/font.zip -sSL https://ipafont.ipa.go.jp/IPAfont/ipag00303.zip \
     && mkdir /tmp/work \
     && unzip /tmp/font.zip -j -d /tmp/work \
     && rm /tmp/font.zip \

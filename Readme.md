@@ -7,7 +7,7 @@ License
 ------------
 Except the codes from origin, anothers are WTFPL2.
 NO WARRANTY.
-If you use IPA font, you must agree [IPA Font License Agreement v1.0](https://ipafont.ipa.go.jp/old/ipafont/download.html).
+If you use IPA font, you must agree [IPA Font License Agreement v1.0](https://ipafont.ipa.go.jp/ipa_font_license_v1-html#en).
 
 Installation
 ------------
@@ -31,7 +31,7 @@ Current version
 |glpi        |Patch:  [LDAPS Patch](https://github.com/indication/glpi/commit/20cdeba65f7c2508fbd9bdf895bedb67bcd7acdc) |-     |from github, Allow to connect LDAP SSL (not TLS)|
 |glpi        |PHP(base)    |7.2-fpm-alpine  |Official|
 |glpi        |H2O          |-          |alpine linux provided|
-|glpi        |[IPA font](https://www.ipa.go.jp/osc/ipafont)|Ver.003.01|[IPA font license](https://ipafont.ipa.go.jp/ipa_font_license_v1-html#en)|
+|glpi        |[IPA font](https://www.ipa.go.jp/osc/ipafont)|Ver.003.03|[IPA font license](https://ipafont.ipa.go.jp/ipa_font_license_v1-html#en)|
 |glpidb      |MySQL        |5          |Minor version is not specified|
 
 

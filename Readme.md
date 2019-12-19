@@ -7,6 +7,7 @@ License
 ------------
 Except the codes from origin, anothers are WTFPL2.
 NO WARRANTY.
+If you use IPA font, you must agree [IPA Font License Agreement v1.0](https://ipafont.ipa.go.jp/old/ipafont/download.html).
 
 Installation
 ------------

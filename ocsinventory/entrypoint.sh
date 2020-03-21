@@ -31,7 +31,11 @@ if [ ! -f "/usr/share/ocsinventory-reports/ocsreports/.buildready" ] ; then
   echo "    define('SERVER_WRITE', '${OCS_DBSERVER_WRITE}');" >> $DBCONFIG
   echo "    define('COMPTE_BASE', '${OCS_DBUSER}');" >> $DBCONFIG
   echo "    define('PSWD_BASE', '${OCS_DBPASS}');" >> $DBCONFIG
-  echo "    \$_SESSION['PSWD_BASE']=PSWD_BASE;" >> $DBCONFIG
+  echo "    define('ENABLE_SSL', '0');" >> $DBCONFIG
+  echo "    define('SSL_MODE', '');" >> $DBCONFIG
+  echo "    define('SSL_KEY', '');" >> $DBCONFIG
+  echo "    define('SSL_CERT', '');" >> $DBCONFIG
+  echo "    define('CA_CERT', '');" >> $DBCONFIG
   echo "?>" >> $DBCONFIG
   chown -R www-data:www-data /var/www/html \
    /etc/ocsinventory-server \

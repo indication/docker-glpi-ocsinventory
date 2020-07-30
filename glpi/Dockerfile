@@ -38,8 +38,8 @@ VOLUME ["/var/lib/glpi"]
 WORKDIR /var/www/html/glpi
 RUN chown -R www-data:www-data /var/www/html
 USER www-data
-ENV GLPI_VERSION 9.5.0
-ENV GLPI_MD5SUM 015f0d28bdd1a95826fe46292d4c9f6a
+ENV GLPI_VERSION 9.5.1
+ENV GLPI_MD5SUM cd1d9b756807086390d4725136239d4b
 # Clone and dependencies
 # Copy all configuration files and add alias(ln) to /glpi
 RUN set -ex \

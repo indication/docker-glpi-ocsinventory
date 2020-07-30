@@ -26,7 +26,7 @@ Current version
 |Docker      |Package      |Version    |Note   |
 |------------|-------------|-----------|-------|
 |glpi        |GLPI         |9.5.0      |from github|
-|glpi        |Plugin: [ocsinventoryng](https://github.com/pluginsGLPI/ocsinventoryng)|1.6.0|from github|
+|glpi        |Plugin: [ocsinventoryng](https://github.com/pluginsGLPI/ocsinventoryng)|1.7.0|from github|
 |glpi        |Plugin: [browsernotification](https://github.com/edgardmessias/browsernotification)|1.1.9|from github|
 |glpi        |Patch:  [LDAPS Patch](https://github.com/indication/glpi/commit/20cdeba65f7c2508fbd9bdf895bedb67bcd7acdc) |-     |from github, Allow to connect LDAP SSL (not TLS)|
 |glpi        |PHP(base)    |7.2-fpm-alpine  |Official|

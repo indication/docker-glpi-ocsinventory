@@ -6,14 +6,15 @@ MAINTAINER in_dow <in_dow [at] hotmail.com>
 # Install recommend packages
 RUN apk add -U --no-cache mysql-client gd \
     openldap libressl libzip freetype libpng libjpeg-turbo \
-    h2o supervisor imap-dev sudo musl c-client
+    h2o supervisor imap-dev sudo musl c-client icu bzip2
 # Setup additional packages
 RUN set -ex \
     && apk add -U --no-cache --virtual .php-buildapps gcc make perl autoconf file g++ \
         openldap-dev libressl-dev libzip-dev libxml2-dev freetype-dev libpng-dev libjpeg-turbo-dev \
-        dpkg-dev dpkg re2c patch libc-dev musl-dev \
+        dpkg-dev dpkg re2c patch libc-dev musl-dev icu-dev bzip2-dev \
     && docker-php-ext-install -j$(nproc) mysqli pdo_mysql \
-    && docker-php-ext-install -j$(nproc) xmlrpc zip opcache \
+    && docker-php-ext-install -j$(nproc) xmlrpc zip opcache  \
+    && docker-php-ext-install -j$(nproc) intl exif bz2 \
     && docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
     && docker-php-ext-install -j$(nproc) gd \
     && docker-php-ext-configure imap --with-imap --with-imap-ssl \
@@ -35,8 +36,8 @@ VOLUME ["/var/lib/glpi"]
 WORKDIR /var/www/html/glpi
 RUN chown -R www-data:www-data /var/www/html
 USER www-data
-ENV GLPI_VERSION 9.4.6
-ENV GLPI_MD5SUM faad40eccea1ba356c7ff7f048f16b02
+ENV GLPI_VERSION 9.5.0
+ENV GLPI_MD5SUM 015f0d28bdd1a95826fe46292d4c9f6a
 # Clone and dependencies
 # Copy all configuration files and add alias(ln) to /glpi
 RUN set -ex \
@@ -78,7 +79,23 @@ RUN set -ex \
     && tar -xzf /tmp/$PLUGIN_NAME.tar.gz --strip-components=1 \
     && cd ../.. \
     && rm /tmp/$PLUGIN_NAME.tar.gz
-    
+
+# check environment
+RUN set -ex \
+    && mkdir -p files/_cron \
+    && mkdir -p files/_dumps \
+    && mkdir -p files/_graphs \
+    && mkdir -p files/_lock \
+    && mkdir -p files/_pictures \
+    && mkdir -p files/_plugins \
+    && mkdir -p files/_rss \
+    && mkdir -p files/_sessions \
+    && mkdir -p files/_logs \
+    && mkdir -p files/_tmp \
+    && mkdir -p files/_uploads \
+    && mkdir -p files/_cache \
+    && php bin/console glpi:system:check_requirements
+   
 USER root
 
 # Local patch for LDAPS

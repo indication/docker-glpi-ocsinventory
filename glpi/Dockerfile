@@ -23,6 +23,8 @@ RUN set -ex \
     && docker-php-ext-install -j$(nproc) ldap \
     && pecl install apcu \
     && pecl clear-cache \
+    && curl -o /tmp/phpcas.tgz -sSL https://github.com/apereo/phpCAS/releases/download/1.3.8/CAS-1.3.8.tgz \
+    && pear install /tmp/phpcas.tgz && rm /tmp/phpcas.tgz \
     && docker-php-ext-enable apcu opcache imap \
     && apk del --purge .php-buildapps \
     && mkdir -p /var/www/html/glpi

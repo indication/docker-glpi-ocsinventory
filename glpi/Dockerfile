@@ -50,7 +50,7 @@ RUN set -ex \
     && rm -rf files \
     && rm /tmp/glpi.tar.gz
 RUN set -ex \
-    && curl -o /tmp/font.zip -sSL https://ipafont.ipa.go.jp/IPAfont/ipag00303.zip \
+    && curl -o /tmp/font.zip -sSL http://moji.or.jp/wp-content/ipafont/IPAfont/ipag00303.zip \
     && mkdir /tmp/work \
     && unzip /tmp/font.zip -j -d /tmp/work \
     && rm /tmp/font.zip \

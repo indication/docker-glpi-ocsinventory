@@ -25,13 +25,13 @@ Current version
 
 |Docker      |Package      |Version    |Note   |
 |------------|-------------|-----------|-------|
-|glpi        |GLPI         |9.5.1      |from github|
+|glpi        |GLPI         |9.5.2      |from github|
 |glpi        |Plugin: [ocsinventoryng](https://github.com/pluginsGLPI/ocsinventoryng)|1.7.0|from github|
 |glpi        |Plugin: [browsernotification](https://github.com/edgardmessias/browsernotification)|1.1.9|from github|
 |glpi        |Patch:  [LDAPS Patch](https://github.com/indication/glpi/commit/20cdeba65f7c2508fbd9bdf895bedb67bcd7acdc) |-     |from github, Allow to connect LDAP SSL (not TLS)|
 |glpi        |PHP(base)    |7.2-fpm-alpine  |Official|
 |glpi        |H2O          |-          |alpine linux provided|
-|glpi        |[IPA font](https://www.ipa.go.jp/osc/ipafont)|Ver.003.03|[IPA font license](https://ipafont.ipa.go.jp/ipa_font_license_v1-html#en)|
+|glpi        |[IPA font](https://moji.or.jp/ipafont/)|Ver.003.03|[IPA font license](https://moji.or.jp/ipafont/license/#en)|
 |glpidb      |MySQL        |5          |Minor version is not specified|
 
 

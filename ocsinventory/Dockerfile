@@ -52,7 +52,7 @@ RUN set -ex \
     && rm -fr /var/cache/apt/* /var/lib/apt/lists/*
 
 ############# BASE APPLICATION SETUP  ######################
-ENV OCS_VERSION 2.7
+ENV OCS_VERSION 2.8
 ENV OCS_MD5SUM 2c5691aa330b48ef96e5944e6251177c
 WORKDIR /tmp
 # perl-utils is for cpan

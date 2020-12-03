@@ -53,7 +53,7 @@ RUN set -ex \
 
 ############# BASE APPLICATION SETUP  ######################
 ENV OCS_VERSION 2.8
-ENV OCS_MD5SUM 2c5691aa330b48ef96e5944e6251177c
+ENV OCS_MD5SUM 6c8f0fa3dbfa5a36b04d3e93d0a8a907
 WORKDIR /tmp
 # perl-utils is for cpan
 RUN set -ex \

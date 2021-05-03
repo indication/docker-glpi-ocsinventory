@@ -3,6 +3,10 @@ FROM debian:buster-slim
 MAINTAINER in_dow <in_dow [at] hotmail.com>
 
 ################### SETUP PACKAGES  ########################
+
+# Remove man pages to reduce size
+ADD ./dpkg-01_nodoc.conf /etc/dpkg/dpkg.conf.d/01_nodoc
+
 # Install recommend packages
 RUN set -ex \
     && apt-get update \

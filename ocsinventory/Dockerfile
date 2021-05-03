@@ -38,6 +38,7 @@ RUN set -ex \
        php-pclzip \
        supervisor \
        mariadb-client \
+       busybox-static cron \
     && apt-get install -y --no-install-recommends \
        libplack-perl \
        libmojolicious-perl \
@@ -152,6 +153,12 @@ RUN set -ex \
     && chmod 644 /etc/supervisord.conf \
     && mv /tmp/entrypoint.sh /usr/share/ocsinventory-reports/ocsreports/ \
     && chmod +x /usr/share/ocsinventory-reports/ocsreports/entrypoint.sh
+
+# Setup crontab to update CVE
+RUN set -ex \
+    && echo "2      4       *       *       *       cd /usr/share/ocsinventory-reports/ocsreports/crontab/ && php cron_cve.php" > crond.txt \
+    && echo "32     4       *       *       *       cd /usr/share/ocsinventory-reports/ocsreports/crontab/ && php php cron_wol.php" > crond.txt \
+    && cat crond.txt | crontab -u www-data - && rm crond.txt
 
 # Put entry point to execute
 ENTRYPOINT ["/usr/share/ocsinventory-reports/ocsreports/entrypoint.sh"]

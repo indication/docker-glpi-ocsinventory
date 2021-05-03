@@ -1,4 +1,4 @@
-FROM debian:stretch-slim
+FROM debian:buster-slim
 
 MAINTAINER in_dow <in_dow [at] hotmail.com>
 
@@ -20,29 +20,27 @@ RUN set -ex \
        libdbd-mysql-perl \
        libio-compress-perl \
        libxml-simple-perl \
-       libsoap-lite-perl \
        libarchive-zip-perl \
        libnet-ip-perl \
        libsoap-lite-perl \
        tar \
        nmap \
        samba \
-       libapache2-mod-php7.0 \
-       php7.0-gd \
-       php7.0-mysql \
-       php7.0-cgi \
-       php7.0-curl \
-       php7.0-xml \
-       php7.0-soap \
-       php7.0-zip \
+       libapache2-mod-php7.3 \
+       php7.3-gd \
+       php7.3-mysql \
+       php7.3-cgi \
+       php7.3-curl \
+       php7.3-xml \
+       php7.3-soap \
+       php7.3-zip \
        php-mbstring \
        php-pclzip \
        supervisor \
-       mysql-client \
+       mariadb-client \
     && apt-get install -y --no-install-recommends \
        libplack-perl \
        libmojolicious-perl \
-       libswagger2-perl \
        libswitch-perl \
     && a2dissite 000-default \
     && a2enmod rewrite \

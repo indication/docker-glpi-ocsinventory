@@ -1,8 +1,12 @@
-FROM debian:stretch-slim
+FROM debian:buster-slim
 
 MAINTAINER in_dow <in_dow [at] hotmail.com>
 
 ################### SETUP PACKAGES  ########################
+
+# Remove man pages to reduce size
+ADD ./dpkg-01_nodoc.conf /etc/dpkg/dpkg.conf.d/01_nodoc
+
 # Install recommend packages
 RUN set -ex \
     && apt-get update \
@@ -20,29 +24,28 @@ RUN set -ex \
        libdbd-mysql-perl \
        libio-compress-perl \
        libxml-simple-perl \
-       libsoap-lite-perl \
        libarchive-zip-perl \
        libnet-ip-perl \
        libsoap-lite-perl \
        tar \
        nmap \
        samba \
-       libapache2-mod-php7.0 \
-       php7.0-gd \
-       php7.0-mysql \
-       php7.0-cgi \
-       php7.0-curl \
-       php7.0-xml \
-       php7.0-soap \
-       php7.0-zip \
+       libapache2-mod-php7.3 \
+       php7.3-gd \
+       php7.3-mysql \
+       php7.3-cgi \
+       php7.3-curl \
+       php7.3-xml \
+       php7.3-soap \
+       php7.3-zip \
        php-mbstring \
        php-pclzip \
        supervisor \
-       mysql-client \
+       mariadb-client \
+       busybox-static cron \
     && apt-get install -y --no-install-recommends \
        libplack-perl \
        libmojolicious-perl \
-       libswagger2-perl \
        libswitch-perl \
     && a2dissite 000-default \
     && a2enmod rewrite \
@@ -52,8 +55,8 @@ RUN set -ex \
     && rm -fr /var/cache/apt/* /var/lib/apt/lists/*
 
 ############# BASE APPLICATION SETUP  ######################
-ENV OCS_VERSION 2.7
-ENV OCS_MD5SUM 2c5691aa330b48ef96e5944e6251177c
+ENV OCS_VERSION 2.8
+ENV OCS_MD5SUM 6c8f0fa3dbfa5a36b04d3e93d0a8a907
 WORKDIR /tmp
 # perl-utils is for cpan
 RUN set -ex \
@@ -154,6 +157,12 @@ RUN set -ex \
     && chmod 644 /etc/supervisord.conf \
     && mv /tmp/entrypoint.sh /usr/share/ocsinventory-reports/ocsreports/ \
     && chmod +x /usr/share/ocsinventory-reports/ocsreports/entrypoint.sh
+
+# Setup crontab to update CVE
+RUN set -ex \
+    && echo "2      4       *       *       *       cd /usr/share/ocsinventory-reports/ocsreports/crontab/ && php cron_cve.php" > crond.txt \
+    && echo "32     4       *       *       *       cd /usr/share/ocsinventory-reports/ocsreports/crontab/ && php php cron_wol.php" > crond.txt \
+    && cat crond.txt | crontab -u www-data - && rm crond.txt
 
 # Put entry point to execute
 ENTRYPOINT ["/usr/share/ocsinventory-reports/ocsreports/entrypoint.sh"]

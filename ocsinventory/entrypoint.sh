@@ -30,7 +30,7 @@ if [ ! -f "/usr/share/ocsinventory-reports/ocsreports/.buildready" ] ; then
   echo "    define('SERVER_READ', '${OCS_DBSERVER_READ}');" >> $DBCONFIG
   echo "    define('SERVER_WRITE', '${OCS_DBSERVER_WRITE}');" >> $DBCONFIG
   echo "    define('COMPTE_BASE', '${OCS_DBUSER}');" >> $DBCONFIG
-  echo "    define('SERVER_PORT', ${OCS_DB_PORT});" >> $DBCONFIG
+  echo "    define('SERVER_PORT', ${OCS_DB_PORT:-3306});" >> $DBCONFIG
   echo "    define('PSWD_BASE', '${OCS_DBPASS}');" >> $DBCONFIG
   echo "    define('ENABLE_SSL', '0');" >> $DBCONFIG
   echo "    define('SSL_MODE', '');" >> $DBCONFIG
